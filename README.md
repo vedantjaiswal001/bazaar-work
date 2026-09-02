@@ -39,7 +39,7 @@
 | **The guarantee** | No execution path can settle above the human-signed cap, and nothing probabilistic can widen authority. |
 | **The proof** | 93 tests, **100%** adversarial block, **0%** false-block, **0** fuzzer escapes over 20,000 random states. |
 | **A real rail** | Verifies a genuine Google **AP2** ES256 Cart Mandate from an AI buyer, then settles it on Razorpay **Test Mode**. |
-| **The honesty** | Every number reproduces from one command. The unflattering ones are shown next to the flattering ones. |
+| **The honesty** | Every scoreboard number reproduces from one command. The unflattering ones are shown next to the flattering ones. |
 
 ## The one idea
 
@@ -95,7 +95,7 @@ The obvious alternative is to ask a model "should this payment go through?" on e
 | On every decision | LLM-as-judge | BAZAAR's deterministic gate |
 |---|---|---|
 | Same input, same verdict | No: sampling and prompt drift make it non-reproducible | Yes: a pure function, identical on every run |
-| Why it decided | A paragraph of prose you have to trust | Exactly one of nine machine-readable reason codes |
+| Why it decided | A paragraph of prose you have to trust | Exactly one of nine machine-readable gate reason codes |
 | Injected catalog text can flip it | Yes: prompt injection is an open research problem | No: untrusted text is data, never an instruction (`UNTRUSTED_INSTRUCTION`) |
 | Can it exceed the signed cap | Only as bounded as the prompt it was handed | Never: the cap is a cryptographic invariant 20,000 fuzz states cannot break |
 | Cost per decision | A network round-trip, hundreds of ms to seconds | About **0.13 ms** p50 in-process, roughly **7,000** authorizations/sec on one core |
@@ -114,11 +114,11 @@ Every figure here is printed by `make benchmark`, so you can reproduce them your
 | Gate held-out result (72 fresh, unseen attacks) | **100%** block, 0% false-block |
 | Fuzzer: spend-cap violations over 20,000 random states | **0** |
 
-Economic axis (same harness, no new engine): the seller's **bounded** upsell lifted average order value by **~7.7%**, with **100%** of upsold orders still clearing the same gate, a safe gate that does not kill revenue.
+Economic axis (same harness, no new engine): the seller's **bounded** upsell lifted average order value by **+7.72%**, with **100%** of upsold orders still clearing the same gate, a safe gate that does not kill revenue.
 
 The advisory risk model is a **calibrated** classifier (precision **1.00**, recall **1.00**, Brier **0.038**) on a risk-model held-out set of **360 attacks + 900 legit** with fresh keys. Because these synthetic classes are separable by construction, a clean 1.00 is *expected, not magic*, so the eval leads with the **harder** signals: calibration, a **noise-robustness curve** (recall falls to ~0.82 under noise), a **leave-one-class-out** probe (mean 11%), and an **out-of-distribution** test (Generator B) where the advisory model's recall honestly **drops to 0.63 while the deterministic gate still blocks 100%**. The model is advisory: it can only *tighten* to a review hold, never widen authority. Full methodology, counts and curves in [`docs/eval/RISK_BRAIN.md`](docs/eval/RISK_BRAIN.md).
 
-**Live settlement is proven, not simulated.** `make live` runs one real Razorpay Test Mode order end to end, a captured payment and a reconcile that settles exactly once, with a repeated attempt refusing to double-charge. It is the one result you reproduce with your own `rzp_test_` keys rather than from the repo alone (the in-repo tests exercise the same flow against a faithful fake).
+**Live settlement is a real Razorpay Test Mode payment, not a simulation.** `make live` runs one real Razorpay Test Mode order end to end, a captured payment and a reconcile that settles exactly once, with a repeated attempt refusing to double-charge. It is the one result you reproduce with your own `rzp_test_` keys rather than from the repo alone (the in-repo tests exercise the same flow against a faithful fake).
 
 **Fast enough to sit in front of every payment.** Because the gate is a pure function with no network call and no model inference, one full authorization (all 11 checks plus the Ed25519 mandate verify) takes about **0.13 ms** at p50 and stays **well under a millisecond** at p99, roughly **7,000** authorizations per second on a single core in this environment. Reproduce with `make latency`; the exact distribution and the machine it ran on are recorded in [`docs/evidence/gate_latency.json`](docs/evidence/gate_latency.json).
 
@@ -142,13 +142,13 @@ Full mapping of attack to defense in [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.
 
 ## Sellable to a real AI buyer: the AP2 rail
 
-BAZAAR doesn't only defend its own mandates; it accepts a real, agent-standard payment authorization. A buyer's credential provider signs an **ES256 Cart Mandate** (Google's Agent Payments Protocol); BAZAAR verifies its authenticity, registered signer, unexpired, self-consistent, then settles it through the **same untouched 11-check gate**. Authenticity is AP2's job; money is the gate's.
+BAZAAR doesn't only defend its own mandates; it accepts a real, agent-standard payment authorization. A buyer's credential provider signs an **ES256 Cart Mandate** (Google's Agent Payments Protocol); BAZAAR verifies its authenticity (registered signer, unexpired, self-consistent), then settles it through the **same untouched 11-check gate**. Authenticity is AP2's job; money is the gate's.
 
 `python scripts/ap2_demo.py` (or `make ap2`): **1/1** legit carts clear, **5/5** tampers caught, a price tamper and an over-budget cart at the money gate; an expired, signature-tampered, or unregistered-signer cart at AP2 verification, *before* the gate. 12 tests in `tests/integration/test_ap2.py`. Full write-up in [`docs/AP2_RAIL.md`](docs/AP2_RAIL.md).
 
 ## Two-sided price integrity: merchant-as-signer
 
-Both sides of a purchase are signed. The buyer's mandate is issuer-signed and issuer-pinned; the merchant signs a price attestation (Ed25519) over the price it will honour, verified against a trusted merchant key. When it verifies, the gate authorises against that merchant-signed price and the receipt is marked dual-signed. The gate then enforces that the authorised amount equals the merchant-of-record price and stays within the signed cap, so tampering the mandate fails its issuer-pinned signature (`MANDATE_IMMUTABLE`) and tampering the price fails the gate's price check (`PRICE_MISMATCH_MERCHANT_RECORD`). Price integrity is signed on both sides, and the gate, not a bare value guess, is what enforces it. See [`backend/bazaar/catalog/attestation.py`](backend/bazaar/catalog/attestation.py).
+Both sides of a purchase are signed. The buyer's mandate is issuer-signed and issuer-pinned; the merchant signs a price attestation (Ed25519) over the price it will honor, verified against a trusted merchant key. When it verifies, the gate authorizes against that merchant-signed price and the receipt is marked dual-signed. The gate then enforces that the authorized amount equals the merchant-of-record price and stays within the signed cap, so tampering the mandate fails its issuer-pinned signature (`MANDATE_IMMUTABLE`) and tampering the price fails the gate's price check (`PRICE_MISMATCH_MERCHANT_RECORD`). Price integrity is signed on both sides, and the gate, not a bare value guess, is what enforces it. See [`backend/bazaar/catalog/attestation.py`](backend/bazaar/catalog/attestation.py).
 
 ## Try it in 60 seconds
 
@@ -195,11 +195,11 @@ make web     # the console on :5173       (terminal 2)  ->  open http://localhos
 1. **Intent Compiler and Signed Mandate** - natural-language request to structured mandate; the human confirms the rendered mandate, then it is Ed25519-signed and locked with a generous but bounded TTL. The agent never holds the signing key.
 2. **Deterministic Authorization Gate** - the heart: a fixed 11-check checklist (signature by a trusted issuer, mandate binds the agent, not expired, agent not frozen, money-field is merchant-sourced, record exists, price == merchant of record, category in allowlist, amount within the cap, nonce unused, not already executed) to ALLOW or one reason code.
 3. **Buyer and Seller Agents + Bounded Negotiation** - one negotiation round clamped between the buyer's cap and the seller's floor, both visible on screen.
-4. **Razorpay Test-Mode Settlement** - real Orders + Payments with idempotency and verified webhooks; the ambiguous window defaults to "not paid," reconciles from Razorpay, and never re-charges.
+4. **Razorpay Test Mode Settlement** - real Orders + Payments with idempotency and verified webhooks; the ambiguous window defaults to "not paid," reconciles from Razorpay, and never re-charges.
 5. **Trust Receipt + Hash-Chained Audit Log** - every authorization emits a signed receipt; each log entry chains the previous entry's hash, making the whole log tamper-evident without a blockchain.
 6. **Red-Team Harness + Benchmark** - an adversarial agent attacks the live gate across nine classes; a property-based fuzzer attacks the core invariant; the benchmark measures block rates, false-block rate, and honest escapes.
 7. **AP2 Rail Adapter** - verifies a real ES256 Cart Mandate (Google's Agent Payments Protocol) and maps it into the canonical Mandate + transaction, so a genuine AI buyer can transact through the same untouched gate (`backend/bazaar/adapters/ap2.py`).
-8. **Calibrated Risk Brain + Merchant-as-Signer** - a calibrated advisory classifier (recall 1.00 at zero false positives, interpretable weights) and Ed25519 merchant price attestations, so both the buyer's cap and the merchant's price are signed and the gate enforces the authorised amount against the merchant-of-record price.
+8. **Calibrated Risk Brain + Merchant-as-Signer** - a calibrated advisory classifier (recall 1.00 at zero false positives, interpretable weights) and Ed25519 merchant price attestations, so both the buyer's cap and the merchant's price are signed and the gate enforces the authorized amount against the merchant-of-record price.
 
 ## The boundary that must not blur
 
@@ -207,7 +207,7 @@ The deterministic `verifier/` imports **nothing** from the LLM or agent layer. T
 
 ```
 bazaar/
-├── backend/     intent/ policy/ verifier/ risk/ adapters/ razorpay/ receipt/ ledger/ redteam/ agents/ catalog/
+├── backend/     intent/ policy/ verifier/ risk/ adapters/ crypto/ catalog/ agents/ razorpay/ receipt/ ledger/ db/ api/ redteam/
 ├── frontend/    live Razorpay-brand console (React + TS + Vite)
 ├── tests/       unit/ integration/ property/ security/
 ├── benchmarks/  one-command runner -> scoreboard

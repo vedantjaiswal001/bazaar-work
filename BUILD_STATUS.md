@@ -96,7 +96,7 @@ ran successfully. Anything not yet run says so.
 
 ### ✅ Phase 7 - Calibrated risk brain (recall 0.22 → 1.00)
 - Replaced the heuristic advisory model with a **calibrated logistic classifier**
-  over a 20-feature behavioural vector (`risk/features.py`), trained + evaluated by
+  over a 20-feature behavioral vector (`risk/features.py`), trained + evaluated by
   `scripts/train_risk.py` (`make train`). Kept the RiskSignal contract (advisory,
   tighten-only) and the `scan_injection` export; the risk layer still imports
   nothing from the verifier (module-boundary test green).
@@ -116,7 +116,7 @@ ran successfully. Anything not yet run says so.
 
 ### ✅ Phase 9 - Merchant-as-signer (two-sided price integrity)
 - `catalog/attestation.py`: the merchant signs `(sku, price, category)` with
-  Ed25519; the AP2 flow authorises against the **merchant-signed** price. Tampered /
+  Ed25519; the AP2 flow authorizes against the **merchant-signed** price. Tampered /
   untrusted / expired attestations are rejected. 4 unit tests; AP2 legit purchases
   return `dual_signed: true`.
 

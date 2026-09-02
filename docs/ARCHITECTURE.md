@@ -30,12 +30,14 @@ Razorpay Test Mode  ──►  webhook  ──►  Trust Receipt (signed) ──
 | `policy/`         | Constraints: category allowlist, caps, risk escalation                | Yes      |
 | `verifier/`       | **The gate.** Fixed checklist → ALLOW or one reason code              | **Yes**  |
 | `risk/`           | Advisory risk signal; may only tighten the gate                       | No       |
+| `adapters/`       | Untrusted rail adapter (AP2): verify a Cart Mandate's authenticity, then hand it to the same gate; cannot bypass it | No       |
 | `catalog/`        | Merchant of record - authoritative price/category, seller read-only   | Yes      |
 | `agents/`         | Buyer + seller agents; bounded negotiation                            | No       |
 | `crypto/`         | Ed25519 signing + RFC 8785 canonical JSON (vetted libs only)          | Yes      |
 | `ledger/`         | Append-only, hash-chained audit log                                   | Yes      |
 | `receipt/`        | Signed Trust Receipt + live verify                                    | Yes      |
-| `razorpay/`       | Test-mode Orders + Payments + verified webhooks                       | Yes      |
+| `razorpay/`       | Test Mode Orders + Payments + verified webhooks                       | Yes      |
+| `api/`            | FastAPI routes that serve the console + live demo; call the verifier, never replace it | No       |
 | `redteam/`        | Adversarial agent + property fuzzer                                   | -        |
 | `db/`             | SQLite schema + access; UNIQUE constraints enforce two defenses       | Yes      |
 

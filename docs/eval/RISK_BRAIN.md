@@ -1,4 +1,4 @@
-# The Risk Brain - advisory behavioural classifier
+# The Risk Brain - advisory behavioral classifier
 
 *Author: Vedant Jaiswal. Every number below is produced by `make train` (or
 `python scripts/train_risk.py`) and `make benchmark`; the plots are written to
@@ -6,7 +6,7 @@
 
 ## What it is (and is not)
 
-The **deterministic gate remains the sole authoriser** - its 100% block / 0%
+The **deterministic gate remains the sole authorizer** - its 100% block / 0%
 false-block is a *proof* (a fixed checklist + a fuzzed invariant), not a learned
 metric. The risk brain is an **advisory** layer: a calibrated classifier that can
 only ever *tighten* a decision to a human-review hold (`NORMAL → REVIEW →
@@ -28,7 +28,7 @@ It missed 112 of 144 attacks because it only ever saw `(txn, record)` - it could
 not see the live signals that define replay, duplicate, frozen-agent and
 forged-issuer attacks. The upgrade gives the model that context (`RiskContext`)
 and replaces the rules with a **calibrated logistic model** over a 20-feature
-behavioural vector.
+behavioral vector.
 
 ## Dataset & methodology (so the numbers are defensible, not theatre)
 
@@ -116,7 +116,7 @@ shouldn't: those invariants are the gate's job. The model's value is calibrated
 
 ## Why logistic, not a boosted tree
 
-The behavioural signals are, by design, well separated, so a linear model gives
+The behavioral signals are, by design, well separated, so a linear model gives
 perfect ranking **and an interpretable weight per feature** - far more defensible
 for a money system than an opaque ensemble (a `HistGradientBoosting` baseline
 actually *underperformed* on these sparse one-hot signals). Top standardised

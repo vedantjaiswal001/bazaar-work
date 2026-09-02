@@ -9,7 +9,7 @@ proof of it. No real money moves - the client refuses any key that is not
 ## Reproduce it yourself
 
 ```bash
-cp .env.example .env         # then add your RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET (test mode)
+cp .env.example .env         # then add your RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET (Test Mode)
 make live
 ```
 
@@ -48,6 +48,6 @@ pay with Razorpay's **test card `4111 1111 1111 1111`** → `reconcile` settles 
 - `RAZORPAY_KEY_SECRET`, the webhook secret, or any full `Authorization` header.
 - `.env` itself (already git-ignored at the repo root).
 
-Test-mode `order_`/`pay_` ids are low-risk, but mask a few middle characters if
+Test Mode `order_`/`pay_` ids are low-risk, but mask a few middle characters if
 you prefer. The screen recording is the strongest single piece of proof - the
 JSON is the machine-readable backup.

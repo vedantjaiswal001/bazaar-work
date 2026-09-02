@@ -25,7 +25,7 @@ AI buyer's credential provider          BAZAAR merchant
                                              │  amount == merchant-of-record price?
                                              │  within cap? category? nonce? ...
                                              ▼
-                                        ALLOW → settle (Razorpay test mode)
+                                        ALLOW → settle (Razorpay Test Mode)
                                         BLOCK → machine-readable reason code
 ```
 
