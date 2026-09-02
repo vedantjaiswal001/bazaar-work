@@ -8,7 +8,7 @@
 
 <p>
 <a href="https://razorpay.com/"><img src="https://img.shields.io/badge/Razorpay%20AI%20Buildathon%202026-Track%2001-0B74C4?style=flat-square" alt="Razorpay AI Buildathon 2026 Track 01"></a>
-<a href="https://github.com/vedantjaiswal001/bazaar/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/vedantjaiswal001/bazaar/ci.yml?branch=main&style=flat-square&label=CI" alt="CI status"></a>
+<a href="https://github.com/vedantjaiswal001/bazaar-work/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/vedantjaiswal001/bazaar-work/ci.yml?branch=main&style=flat-square&label=CI" alt="CI status"></a>
 <a href="tests/"><img src="https://img.shields.io/badge/tests-93%20passing-2ea44f?style=flat-square" alt="93 tests passing"></a>
 <a href="docs/EVAL.md"><img src="https://img.shields.io/badge/adversarial%20block-100%25-2ea44f?style=flat-square" alt="adversarial block 100%"></a>
 <a href="docs/EVAL.md"><img src="https://img.shields.io/badge/false--block-0%25-2ea44f?style=flat-square" alt="false-block 0%"></a>
@@ -18,8 +18,8 @@
 </p>
 
 <p>
-<a href="https://vedantjaiswal001.github.io/bazaar/"><strong>Live demo (interactive)</strong></a> &nbsp;·&nbsp;
-<a href="https://github.com/vedantjaiswal001/bazaar">GitHub repo</a> &nbsp;·&nbsp;
+<a href="https://vedantjaiswal001.github.io/bazaar-work/"><strong>Live demo (interactive)</strong></a> &nbsp;·&nbsp;
+<a href="https://github.com/vedantjaiswal001/bazaar-work">GitHub repo</a> &nbsp;·&nbsp;
 <a href="docs/THREAT_MODEL.md">Threat model</a> &nbsp;·&nbsp;
 <a href="docs/ARCHITECTURE.md">Architecture</a> &nbsp;·&nbsp;
 <a href="docs/EVAL.md">Evaluation</a> &nbsp;·&nbsp;
@@ -76,7 +76,7 @@ Understand it in ten seconds: **intelligence proposes; a fixed, cryptographic ve
 <img src="docs/demo.gif" alt="A real screen recording of the live demo: nine attacks are fired at the gate and each is blocked in real time with its own machine-readable reason code" width="840">
 </div>
 
-<div align="center"><sub>A real screen recording of the <a href="https://vedantjaiswal001.github.io/bazaar/">live demo</a>: nine attacks fired at the gate, each blocked in real time with its own reason code. Nothing mocked.</sub></div>
+<div align="center"><sub>A real screen recording of the <a href="https://vedantjaiswal001.github.io/bazaar-work/">live demo</a>: nine attacks fired at the gate, each blocked in real time with its own reason code. Nothing mocked.</sub></div>
 
 ## How the gate decides
 
