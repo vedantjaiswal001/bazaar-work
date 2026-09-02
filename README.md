@@ -73,10 +73,10 @@ Understand it in ten seconds: **intelligence proposes; a fixed, cryptographic ve
 ## See it run
 
 <div align="center">
-<img src="docs/demo.gif" alt="A real screen recording of the live demo: nine attacks are fired at the gate and each is blocked in real time with its own machine-readable reason code" width="840">
+<video src="docs/seeitrun.mp4" controls muted playsinline poster="docs/demo.gif" width="840"></video>
 </div>
 
-<div align="center"><sub>A real screen recording of the <a href="https://vedantjaiswal001.github.io/bazaar-work/">live demo</a>: nine attacks fired at the gate, each blocked in real time with its own reason code. Nothing mocked.</sub></div>
+<div align="center"><sub>A real screen recording of the <a href="https://vedantjaiswal001.github.io/bazaar-work/">live demo</a>: nine attacks fired at the gate, each blocked in real time with its own reason code. If the player does not load, <a href="docs/seeitrun.mp4">watch the clip</a> directly. Nothing mocked.</sub></div>
 
 ## How the gate decides
 
