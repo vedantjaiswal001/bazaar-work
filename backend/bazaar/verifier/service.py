@@ -41,11 +41,21 @@ class AuthorizationOutcome:
 
 class AuthorizationService:
     def __init__(self, conn: sqlite3.Connection, authority_keys: tuple[str, str] | None = None,
-                 trusted_issuer_keys: set[str] | None = None):
+                 trusted_issuer_keys: set[str] | None = None, *, allow_unpinned: bool = False):
         self.conn = conn
         self._sk, self._pk = authority_keys or get_authority_keypair()
         # Pinned issuer key(s): a mandate must be signed by one of these to pass the
-        # gate. None means the gate self-verifies (no forged-mandate pinning).
+        # gate, so a compromised agent cannot mint its own mandate with its own key.
+        # Issuer pinning is fail-CLOSED: production MUST supply the trusted set. The
+        # gate's None branch (self-verify only) is reachable only via an explicit
+        # allow_unpinned=True, so a caller cannot disable the pin by omission.
+        if not trusted_issuer_keys and not allow_unpinned:
+            raise ValueError(
+                "AuthorizationService requires trusted_issuer_keys: issuer-key pinning is "
+                "what stops an agent self-issuing a mandate with a bigger cap. Pass the "
+                "trusted issuer key set, or allow_unpinned=True to run without the pin on "
+                "purpose (tests/dev only)."
+            )
         self.trusted_issuer_keys = trusted_issuer_keys
 
     def authorize(

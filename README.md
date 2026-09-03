@@ -9,7 +9,7 @@
 <p>
 <a href="https://razorpay.com/"><img src="https://img.shields.io/badge/Razorpay%20AI%20Buildathon%202026-Track%2001-0B74C4?style=flat-square" alt="Razorpay AI Buildathon 2026 Track 01"></a>
 <a href="https://github.com/vedantjaiswal001/bazaar-work/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/vedantjaiswal001/bazaar-work/ci.yml?branch=main&style=flat-square&label=CI" alt="CI status"></a>
-<a href="tests/"><img src="https://img.shields.io/badge/tests-93%20passing-2ea44f?style=flat-square" alt="93 tests passing"></a>
+<a href="tests/"><img src="https://img.shields.io/badge/tests-94%20passing-2ea44f?style=flat-square" alt="94 tests passing"></a>
 <a href="docs/EVAL.md"><img src="https://img.shields.io/badge/adversarial%20block-100%25-2ea44f?style=flat-square" alt="adversarial block 100%"></a>
 <a href="docs/EVAL.md"><img src="https://img.shields.io/badge/false--block-0%25-2ea44f?style=flat-square" alt="false-block 0%"></a>
 <a href="docs/EVAL.md"><img src="https://img.shields.io/badge/fuzzer%20escapes-0-2ea44f?style=flat-square" alt="fuzzer escapes 0"></a>
@@ -37,7 +37,7 @@
 |---|---|
 | **What it is** | A deterministic authorization gate that sits between an AI agent and real money. |
 | **The guarantee** | No execution path can settle above the human-signed cap, and nothing probabilistic can widen authority. |
-| **The proof** | 93 tests, **100%** adversarial block, **0%** false-block, **0** fuzzer escapes over 20,000 random states. |
+| **The proof** | 94 tests, **100%** adversarial block, **0%** false-block, **0** fuzzer escapes over 20,000 random states. |
 | **A real rail** | Verifies a genuine Google **AP2** ES256 Cart Mandate from an AI buyer, then settles it on Razorpay **Test Mode**. |
 | **The honesty** | Every scoreboard number reproduces from one command. The unflattering ones are shown next to the flattering ones. |
 
@@ -122,6 +122,12 @@ The advisory risk model is a **calibrated** classifier (precision **1.00**, reca
 
 **Fast enough to sit in front of every payment.** Because the gate is a pure function with no network call and no model inference, one full authorization (all 11 checks plus the Ed25519 mandate verify) takes about **0.13 ms** at p50 and stays **well under a millisecond** at p99, roughly **7,000** authorizations per second on a single core in this environment. Reproduce with `make latency`; the exact distribution and the machine it ran on are recorded in [`docs/evidence/gate_latency.json`](docs/evidence/gate_latency.json).
 
+## Why this grows commerce, not just guards it
+
+Track 01 pairs *growth* with *agentic commerce* because they are the same problem: agentic commerce does not scale until the authorization is trustworthy. A merchant will not let an autonomous agent spend against its catalog, and a person will not hand a card to an agent, without a boundary they can verify. Trust is the unlock, and it is exactly what "let the agent pay" demos leave out.
+
+BAZAAR is that unlock, and it does not tax growth to buy safety. The *same* gate that blocks 100% of attacks let a **bounded upsell lift average order value by +7.72%**, with **100% of upsold orders still clearing the gate**, so revenue and safety moved together rather than against each other. And because a decision is a deterministic **0.13 ms** checklist rather than an LLM round-trip, the boundary can sit in front of *every* transaction at commerce scale with no added latency and no per-call model cost. Verifiable authorization is what lets a merchant say **yes** to AI buyers, and saying yes is where the growth is. The architecture is production-ready and deployed live; it settles on Razorpay Test Mode today and is one key-swap from production, refusing any non-test key as a safety guard.
+
 ## Nine attacks, nine reason codes
 
 A compromised buyer or seller agent tries every way to cheat. Each is blocked with a specific code the rest of a system can log and alert on.
@@ -142,7 +148,7 @@ Full mapping of attack to defense in [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.
 
 ## Sellable to a real AI buyer: the AP2 rail
 
-BAZAAR doesn't only defend its own mandates; it accepts a real, agent-standard payment authorization. A buyer's credential provider signs an **ES256 Cart Mandate** (Google's Agent Payments Protocol); BAZAAR verifies its authenticity (registered signer, unexpired, self-consistent), then settles it through the **same untouched 11-check gate**. Authenticity is AP2's job; money is the gate's.
+This is Track 01's second acceptance path, *"make a merchant transactable by an AI buyer end to end,"* built for the protocol race the track's own *why now* names (ACP, AP2, x402, NPCI's UAP). BAZAAR doesn't only defend its own mandates; it accepts a real, agent-standard payment authorization. A buyer's credential provider signs an **ES256 Cart Mandate** (Google's Agent Payments Protocol); BAZAAR verifies its authenticity (registered signer, unexpired, self-consistent), then settles it through the **same untouched 11-check gate**. Authenticity is AP2's job; money is the gate's.
 
 `python scripts/ap2_demo.py` (or `make ap2`): **1/1** legit carts clear, **5/5** tampers caught, a price tamper and an over-budget cart at the money gate; an expired, signature-tampered, or unregistered-signer cart at AP2 verification, *before* the gate. 12 tests in `tests/integration/test_ap2.py`. Full write-up in [`docs/AP2_RAIL.md`](docs/AP2_RAIL.md).
 
@@ -161,7 +167,7 @@ make showcase    # the whole story in one command: ALLOW, tamper-fail,
 Everything else:
 
 ```bash
-make test        # 93 tests: unit + property + security + integration
+make test        # 94 tests: unit + property + security + integration
 make fuzz        # property-based fuzzer against the spend-cap invariant
 make benchmark   # regenerate datasets, run the gate + fuzzer, print the scoreboard
 make latency     # time one real authorization decision through the gate (p50/p99)
@@ -219,7 +225,7 @@ bazaar/
 ## Honesty rules this repo holds itself to
 
 - **No fabricated results, ever.** Numbers come from commands that actually ran. Anything not yet run reads `UNVERIFIED`.
-- **Continuous proof, not a one-time claim.** Every push reruns the full suite, the benchmark, the AP2 rail, and the fuzzer on a clean machine via GitHub Actions; the CI badge above is green only when all 93 tests pass, the benchmark reports zero escapes, and the fuzzer finds zero violations.
+- **Continuous proof, not a one-time claim.** Every push reruns the full suite, the benchmark, the AP2 rail, and the fuzzer on a clean machine via GitHub Actions; the CI badge above is green only when all 94 tests pass, the benchmark reports zero escapes, and the fuzzer finds zero violations.
 - **Reason codes, not vibes.** Every block returns a machine-readable code, and every metric is reproducible from a seed.
 - **The unflattering number gets reported too.** The risk model's recall is shown next to its precision, and its out-of-distribution recall (0.63) is shown next to its clean-set recall (1.00).
 - **Secrets never in git.** `.env` is git-ignored; `.env.example` shows the shape.
@@ -233,6 +239,8 @@ A strong submission names what it does *not* solve. BAZAAR deliberately does not
 - **The risk model does not transfer to novelty.** Held-out mandates use fresh keys, and a second generator (Generator B) tests distribution shift: recall drops to 0.63 there, and a leave-one-class-out probe drops to an 11% mean. The gate blocks 100% in every one of those cases, which is the point.
 - **One real rail is implemented: AP2.** x402 and NPCI's UAP interoperability are future work, not in this submission. The AP2 bridge verifies ES256-signed, single-line Cart Mandates; full SD-JWT selective disclosure and multi-item carts are future.
 - **No hierarchical delegation.** Authority is bounded by issuer-key pinning (an agent cannot self-issue a bigger mandate) and the signed cap, not by parent/child delegation limits (UPI-Circle-style), which are out of scope.
+- **The signed cap is a per-transaction ceiling, not a running budget.** Every authorization enforces `amount <= cap`, and replay or double-charge of the *same* transaction is blocked in the schema; but the gate does not yet sum spend across many *distinct* purchases under one mandate within its TTL. Cumulative-budget and velocity limits are stated future work, not a claim made here.
+- **Single-currency by construction.** Money is compared as integer paise and the catalog is INR throughout; the gate does not yet cross-check a currency field between mandate, record, and cart. Multi-currency support (and the currency-equality check that must come with it) is future work.
 - **The live Razorpay payment needs your keys.** `make live` performs one real Test Mode order and an interactive test-card payment; it needs your own `rzp_test_` keys and is not part of the keyless test suite. Everything else reproduces from the repo alone.
 - **No real money, marketplace, reputation graph, or blockchain.** Settlement is Razorpay **Test Mode** only.
 

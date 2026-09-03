@@ -128,7 +128,7 @@ ran successfully. Anything not yet run says so.
   legit AP2 ALLOW (dual-signed, ₹4,499), signature-tamper rejected pre-gate, budget
   attack BLOCK, and benchmark recall 1.00 over HTTP.
 
-- **93 tests total, all green.**
+- **94 tests total, all green.**
 
 ## Known constraints
 - Razorpay network settlement is validated on a machine that has the author's

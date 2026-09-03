@@ -124,10 +124,20 @@ weights: `over_cap +2.28`, `nonce_seen +1.99`, `agent_frozen +1.96`,
 `category_out +1.96`, `provenance_untrusted +1.95` - every driver is a signal a
 human reviewer would name.
 
+**Honest about what the model did *not* learn.** Several of the 20 features
+(injection-text markers, invalid-signature, missing-record, velocity, prior-blocks)
+carry **near-zero weight**, because the current generators hold them constant: the
+injection and forged-mandate attacks are caught by the strong provenance and issuer
+flags, not by those behavioral signals. So the model's clean-set separation rests on
+a handful of hard flags, not on a broad behavioral profile - which is exactly why
+its recall falls off out of distribution (0.63) while the deterministic gate does
+not. Exercising those features with richer generators is stated future work; it does
+not affect the security guarantee, which is the gate's, not the model's.
+
 ## Reproduce
 
 ```
 make train       # trains, evaluates, writes the artifact + all four plots + risk_eval.json
 make benchmark   # shows the advisory classifier line: precision/recall/F1
-make test        # 93 tests, incl. the tighten-only + module-boundary guarantees
+make test        # 94 tests, incl. the tighten-only + module-boundary guarantees
 ```

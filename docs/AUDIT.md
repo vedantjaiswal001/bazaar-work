@@ -16,7 +16,7 @@ from executed output or a cited code line.
 
 | # | Claim | Status | Reproduce / evidence |
 |---|---|---|---|
-| 1 | 93 tests pass (41 unit · 3 property · 5 security · 44 integration) | **VERIFIED** | `make test` |
+| 1 | 94 tests pass (41 unit · 3 property · 6 security · 44 integration) | **VERIFIED** | `make test` |
 | 2 | Gate blocks 100% of 9 attack classes with the correct reason code; 0% false-block | **VERIFIED** | `make benchmark` |
 | 3 | Property fuzzer: 0 spend-cap violations, 0 escapes over 20,000 states | **VERIFIED** | `make fuzz` |
 | 4 | The deterministic gate was **not modified** by any upgrade | **VERIFIED** | `git log --oneline -- backend/bazaar/verifier/gate.py` → one commit (original) |

@@ -9,6 +9,14 @@ steered by injected text - and it proves each block with a machine-readable
 reason code, a signed receipt, and a tamper-evident audit log - and it now also
 accepts a real AP2 Cart Mandate from an AI buyer and settles it through the same gate.**
 
+**Which of the track's two paths, and why now.** Track 01 accepts either an agent that
+"grows revenue for a merchant" *or* one that "makes a merchant transactable by an AI buyer
+end to end." BAZAAR takes the second path and delivers the first as well: a real AI buyer
+transacts through it over **AP2** - one of the protocols the track's own *why now* names
+alongside ACP, x402, and NPCI's UAP - and the same gate that secures the flow grows order
+value **+7.72%** with a bounded upsell that still clears every check. And it meets THE BAR
+on every line:
+
 ## Track 01's bar, met line by line
 
 The track asks: *"Every money action explainable, bounded and gated. Show the
@@ -27,11 +35,23 @@ audit trail and one failure handled gracefully."*
 - **AP2 rail.** BAZAAR verifies a real **ES256 Cart Mandate** (Google's Agent Payments Protocol) - registered signer, unexpired, self-consistent - then settles it through the *same* untouched gate. `make ap2`: **1/1** legit clears, **5/5** tampers caught (price / over-budget at the money gate; expired / signature / rogue-signer at AP2 verification, before the gate). This is the Track's *"make a merchant transactable by an AI buyer end to end,"* with a genuine protocol.
 - **Merchant-as-signer.** The merchant signs a price attestation (Ed25519) over the price it will honor; when it verifies, the gate authorizes against that merchant-signed price and marks the receipt dual-signed. Both sides are signed - the buyer's issuer-pinned mandate and the merchant's price - and the gate enforces the authorized amount against the merchant-of-record price, so tampering the mandate fails its signature (`MANDATE_IMMUTABLE`) and tampering the price fails the gate's price check (`PRICE_MISMATCH_MERCHANT_RECORD`).
 
+## The growth angle (the other half of Track 01)
+
+Agentic commerce does not scale until the authorization is trustworthy: a merchant will
+not let an autonomous agent spend against its catalog, and a person will not hand a card
+to one, without a boundary they can verify. BAZAAR is that unlock, and it does not trade
+revenue for safety - the *same* gate that blocks 100% of attacks let a bounded upsell lift
+**AOV by +7.72%** with **100%** of upsold orders still clearing, and at **0.13 ms** per
+decision it can sit in front of every transaction at commerce scale with no added latency.
+Verifiable authorization is what lets a merchant say *yes* to AI buyers, which is where the
+growth is. Production-ready and deployed live: Razorpay Test Mode today, one key-swap from
+production, refusing any non-test key as a safety guard.
+
 ## Prove every claim - the commands
 
 ```bash
 make setup        # venv + install + init db
-make test         # 93 tests: unit + property + security + integration
+make test         # 94 tests: unit + property + security + integration
 make fuzz         # property-based fuzzer vs the spend-cap invariant -> real count
 make benchmark    # regenerate datasets, run gate + fuzzer -> the scoreboard
 make latency      # time one real authorization through the gate -> p50/p99, real

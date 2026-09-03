@@ -41,7 +41,7 @@ def main() -> int:
     for variant, note in VARIANTS:
         token = _mint_demo_cart(s, variant)
         out = _run_ap2(s, token)
-        decision, reason, stage = out["decision"], out["reason"], out.get("stage", "-")
+        decision, reason = out["decision"], out["reason"]
         layer = "AP2 authenticity" if not out.get("verified") else "money gate"
         if variant == "legit":
             legit_cleared += int(decision == "ALLOW")

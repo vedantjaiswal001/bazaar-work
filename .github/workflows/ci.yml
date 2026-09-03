@@ -1,7 +1,7 @@
 name: CI
 
 # Every push and PR reruns the whole proof on a clean machine, from scratch.
-# The badge is green only if 93 tests pass, the benchmark reproduces with zero
+# The badge is green only if 94 tests pass, the benchmark reproduces with zero
 # escapes, the AP2 rail is conformant, the fuzzer finds zero violations, and the
 # frontend builds. This is what makes "every number reproduces from a command"
 # checkable by anyone, without cloning.

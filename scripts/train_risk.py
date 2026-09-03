@@ -136,7 +136,7 @@ def _prf(y_true, y_pred):
     prec = tp / (tp + fp) if (tp + fp) else 1.0
     rec = tp / (tp + fn) if (tp + fn) else 0.0
     f1 = 2 * prec * rec / (prec + rec) if (prec + rec) else 0.0
-    return dict(tp=tp, fp=fp, fn=fn, tn=tn, precision=prec, recall=rec, f1=f1)
+    return {"tp": tp, "fp": fp, "fn": fn, "tn": tn, "precision": prec, "recall": rec, "f1": f1}
 
 
 def main() -> int:
