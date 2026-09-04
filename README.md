@@ -241,7 +241,7 @@ A security project is only as honest as the failures it admits. Three real ones 
 
 ## Known limitations (stated, not hidden)
 
-A strong submission names what it does *not* solve. BAZAAR deliberately does not claim these:
+BAZAAR deliberately does not claim these:
 
 - **No real-world fraud accuracy is claimed.** The risk model is evaluated on *synthetic* data whose classes are separable by construction, so the perfect clean-set score is *expected*. The eval reports calibration, a noise-robustness curve, and a leave-one-class-out limit instead of presenting 1.00/1.00 as production fraud performance. The **deterministic gate**, not the model, is the security guarantee.
 - **The risk model does not transfer to novelty.** Held-out mandates use fresh keys, and a second generator (Generator B) tests distribution shift: recall drops to 0.63 there, and a leave-one-class-out probe drops to an 11% mean. The gate blocks 100% in every one of those cases, which is the point.
