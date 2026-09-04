@@ -34,7 +34,7 @@ What the screen does, in six acts (say the line, let the act land):
 2. **CREATE ORDER** - a real Test Mode order appears on `api.razorpay.com`, and its
    status is **NOT PAID**. *"A real order. And notice it defaults to not paid."*
 3. **PAY** - a clean Razorpay-branded page opens. Pay with test card
-   `4111 1111 1111 1111`, any future expiry, any CVV. Return to the terminal, press Enter.
+   `5267 3181 8797 5449`, any future expiry, any CVV. Return to the terminal, press Enter.
 4. **SETTLE** - it reconciles from Razorpay itself and flips to **SETTLED**, exactly once.
    *"It settles against Razorpay as the source of truth."*
 5. **TRY TO DOUBLE-CHARGE** - a retry is **refused**. *"A retry can never charge twice."*

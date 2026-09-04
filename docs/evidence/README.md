@@ -15,7 +15,7 @@ make live
 
 `make live` runs the full flow: the gate **authorizes** → a **real** Test Mode
 `order_...` is created on `api.razorpay.com` (status defaults to NOT PAID) → you
-pay with Razorpay's **test card `4111 1111 1111 1111`** → `reconcile` settles it
+pay with Razorpay's **test card `5267 3181 8797 5449`** → `reconcile` settles it
 **exactly once** → a repeated `settle`/`reconcile` **refuses to double-charge**.
 
 ## What to capture (record before you submit)

@@ -24,7 +24,8 @@ Usage (from the repo root, with your .env filled in):
 Dry run (no network, no keys - proves the wiring with a fake Razorpay):
     python scripts/live_razorpay.py --fake     # or: make live-fake
 
-Razorpay TEST card:  4111 1111 1111 1111   any future expiry   any CVV
+Razorpay TEST card:  5267 3181 8797 5449 (domestic Mastercard)   any future expiry   any CVV
+  If a card is refused as "international", use Netbanking (any bank -> Success) instead.
 """
 from __future__ import annotations
 
@@ -190,8 +191,9 @@ CHECKOUT_HTML = """<!doctype html>
       deterministic gate. No real money moves.</div>
     <button id="pay">Pay with Razorpay</button>
     <div class="ok" id="ok"></div>
-    <div class="tip muted">Test card <code>4111 1111 1111 1111</code>,
-      any future expiry, any CVV, any name.<br>
+    <div class="tip muted">Domestic test card <code>5267 3181 8797 5449</code>,
+      any future expiry, any CVV, any name, then click <b>Success</b>.<br>
+      Card refused as "international"? Use <b>Netbanking</b>, pick any bank, then <b>Success</b>.<br>
       After it succeeds, return to your terminal and press <b>Enter</b>.</div>
   </div>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -357,7 +359,8 @@ def main() -> int:
         url = f"http://127.0.0.1:{port}/"
         act(3, "PAY", "Razorpay test card, in your browser")
         row("opened", url)
-        row("card", "4111 1111 1111 1111  " + dim("any future expiry, any CVV"))
+        row("card", "5267 3181 8797 5449  " + dim("domestic Mastercard, any future expiry, any CVV"))
+        row("or", dim("Netbanking -> any bank -> Success  (if a card is refused as international)"))
         try:
             webbrowser.open(url)
         except (webbrowser.Error, OSError):
