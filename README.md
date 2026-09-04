@@ -233,11 +233,22 @@ bazaar/
 
 ## What broke, and how we got out
 
-A security project is only as honest as the failures it admits. Three real ones from the build:
+A security project is only as honest as the failures it admits. Three real ones from the build, each shown as *what broke* and *how we got out*:
 
-- **The control that mattered most was fail-open.** BAZAAR's headline promise is that an agent cannot forge its own mandate, enforced by issuer-key pinning. A late adversarial review found the pin was *opt-in*: if a caller built the service without passing the trusted issuer keys, the pin silently disabled and a forged mandate would pass. We made it **fail-closed**. The service now refuses to run without a trusted issuer set, running unpinned requires a deliberate opt-in, and a new test (`tests/security/test_issuer_pinning.py`) makes sure it can never regress. A control that is "off when you forget" is not a control.
-- **Our best number looked like a lie.** The risk model scored a perfect precision and recall on the test set, which is exactly what fabricated benchmarks look like. So instead of shipping it, we tried to break it: a second, independent attack generator dropped recall to **0.63**. We kept that unflattering number in the docs and made it the thesis, the model is not the security boundary, the deterministic gate is. A perfect score you cannot explain is a red flag, not a trophy.
-- **Is a payment we never heard back about paid or not?** Razorpay created the order, but the capture confirmation never arrived, the classic ambiguous window. Call it paid and you risk double-charging a real person; call it unpaid and you risk dropping a real payment. We made the gate default to **NOT PAID**, reconcile against Razorpay as the single source of truth, and refuse to ever re-charge, so the worst case is a harmless retry, never a double charge.
+**1. The control that mattered most was fail-open.**
+
+- **What broke:** BAZAAR's headline promise is that an agent cannot forge its own mandate, enforced by issuer-key pinning. A late adversarial review found the pin was *opt-in*, if a caller built the service without passing the trusted issuer keys, the pin silently disabled itself and a forged mandate would pass.
+- **How we got out:** we made it **fail-closed**. The service now refuses to run without a trusted issuer set, running unpinned takes a deliberate opt-in, and a new regression test (`tests/security/test_issuer_pinning.py`) fails the build if it ever reverts. A control that is "off when you forget" is not a control.
+
+**2. Our best number looked like a lie.**
+
+- **What broke:** the risk model scored a perfect precision and a perfect recall on the test set, which is exactly what a fabricated benchmark looks like.
+- **How we got out:** instead of shipping the pretty number we tried to break it, and a second, independent attack generator (Generator B) dropped its recall to **0.63**. We kept that unflattering number in the docs and made it the thesis: the model is not the security boundary, the deterministic gate is. A perfect score you cannot explain is a red flag, not a trophy.
+
+**3. A payment we never heard back about: paid, or not?**
+
+- **What broke:** Razorpay created the order, but the capture confirmation never arrived, the classic ambiguous window. Call it paid and you risk double-charging a real person, call it unpaid and you risk dropping a real payment.
+- **How we got out:** we made the gate default to **NOT PAID**, reconcile against Razorpay as the single source of truth, and refuse to ever re-charge. The worst case is now a harmless retry, never a double charge.
 
 ## Known limitations (stated, not hidden)
 
