@@ -189,7 +189,7 @@ export default function App() {
           <span className="divider" />
           <span className="subtitle">Trust rail for agentic commerce</span>
           <span className="right">
-            <span className="kpi"><b>93</b> tests</span>
+            <span className="kpi"><b>94</b> tests</span>
             <span className="kpi"><b>100%</b> blocked</span>
             <span className="kpi"><b>0%</b> false-block</span>
             <span className="author">Built by <b>Vedant Jaiswal</b></span>
@@ -384,7 +384,7 @@ function ResultsTab() {
         <div className="stat"><div className="l">Adversarial block rate</div><div className="v g">{f ? `${(f.adversarial_block_rate * 100).toFixed(0)}%` : "100%"}</div><div className="s">9 classes · correct code {f ? `${(f.adversarial_correct_code_rate * 100).toFixed(0)}%` : "100%"}</div></div>
         <div className="stat"><div className="l">False-block on legit</div><div className="v g">{f ? `${(f.false_block_rate * 100).toFixed(1)}%` : "0%"}</div><div className="s">400+ cases, incl. boundaries</div></div>
         <div className="stat"><div className="l">Fuzzer escapes</div><div className="v g">{f ? f.fuzzer_cap_violations : 0}</div><div className="s">{f ? f.fuzzer_iterations.toLocaleString() : "20,000"} random states</div></div>
-        <div className="stat"><div className="l">Tests passing</div><div className="v a">93</div><div className="s">unit · property · security · integration</div></div>
+        <div className="stat"><div className="l">Tests passing</div><div className="v a">94</div><div className="s">unit · property · security · integration</div></div>
       </div>
 
       {hint && <div className="offline" style={{ marginTop: 14 }}>{hint}.</div>}
