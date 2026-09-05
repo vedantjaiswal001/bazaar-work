@@ -22,7 +22,7 @@ from executed output or a cited code line.
 | 4 | The deterministic gate was **not modified** by any upgrade | **VERIFIED** | `git log --oneline -- backend/bazaar/verifier/gate.py` → one commit (original) |
 | 5 | Risk brain precision/recall/F1 = 1.00 on held-out **360 attacks + 900 legit**; Brier 0.038 | **VERIFIED** | `make train`; `docs/eval/risk_eval.json` |
 | 6 | Noise-robustness curve degrades smoothly (recall → ~0.82 at σ=1.0) | **VERIFIED** | `make train`; `docs/eval/noise_robustness.png` |
-| 7 | Leave-one-class-out mean ≈ 11% (reported as a limitation) | **VERIFIED** | `make train` |
+| 7 | Leave-one-class-out: single-invariant classes do not transfer (model catches essentially none of an unseen class) | **VERIFIED** | `make train` |
 | 8 | Risk model is advisory / tighten-only - it can never widen authority | **VERIFIED** | `tests/property/test_spend_cap_invariant.py::test_risk_never_widens_authority` |
 | 9 | The risk & verifier layers import nothing from the LLM/agent layer | **VERIFIED** | `tests/security/test_module_boundary.py` |
 | 10 | AP2 rail verifies a **real ES256** Cart Mandate; 1/1 legit, 5/5 tampers, at the right layer | **VERIFIED** | `python scripts/ap2_demo.py`; `adapters/ap2.py` (`algorithms=["ES256"]`) |

@@ -110,7 +110,7 @@ catches the misses regardless.
 ## Generalisation (leave-one-attack-class-out) - reported honestly
 
 Hide a whole attack class in training, test recall on it unseen. A class defined
-by a single hard invariant does **not** transfer (mean **11%**) - and it
+by a single hard invariant does **not** transfer (the model catches **essentially none** of an unseen class; at most one of the nine leaks through) - and it
 shouldn't: those invariants are the gate's job. The model's value is calibrated
 **corroboration**, not replacing the gate. Reporting this limitation is the point.
 
