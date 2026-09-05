@@ -112,9 +112,9 @@
     "category": 0.0,
     "injection": 0.0,
     "state": 0.0,
-    "expiry": 0.0
+    "expiry": 1.0
   },
-  "leave_one_class_out_mean": 0.0,
+  "leave_one_class_out_mean": 0.1111111111111111,
   "thresholds": {
     "review": 0.679,
     "block": 0.729

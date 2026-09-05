@@ -26,6 +26,7 @@ venv/
 node_modules/
 frontend/dist/
 frontend/.vite/
+*.tsbuildinfo
 
 # Benchmark outputs are regenerated; keep the repo clean
 benchmarks/out/

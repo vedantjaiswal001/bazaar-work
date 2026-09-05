@@ -252,7 +252,7 @@
       <span class="chip good"><span class="d"></span><span class="v">0%</span> <span class="l">false-block on legit</span></span>
       <span class="chip good"><span class="d"></span><span class="v">0</span> <span class="l">fuzzer violations</span></span>
       <span class="chip warm"><span class="d"></span><span class="v">+7.72%</span> <span class="l">order value, all cleared</span></span>
-      <span class="chip warm"><span class="d"></span><span class="v">0.13 ms</span> <span class="l">to authorize, no LLM call</span></span>
+      <span class="chip warm"><span class="d"></span><span class="v">0.10 ms</span> <span class="l">to authorize, no LLM call</span></span>
     </div>
     <div class="metaline">
       <span>Settlement · Razorpay Test Mode</span>
@@ -304,7 +304,7 @@
           <div class="a">Why it decided</div><div class="v">prose you must trust</div><div class="v ok">one of 9 reason codes</div>
           <div class="a">Injected text can flip it</div><div class="v">yes, open problem</div><div class="v ok">no, text is data</div>
           <div class="a">Can exceed the signed cap</div><div class="v">prompt-bounded only</div><div class="v ok">never, crypto invariant</div>
-          <div class="a">Cost per decision</div><div class="v">100s of ms, network</div><div class="v ok">~0.13 ms, in-process</div>
+          <div class="a">Cost per decision</div><div class="v">100s of ms, network</div><div class="v ok">~0.10 ms, in-process</div>
           <div class="a">Audit</div><div class="v">stochastic, unprovable</div><div class="v ok">replay the hash chain</div>
         </div>
       </div>
@@ -337,7 +337,7 @@
       <h2>Benchmark scoreboard</h2>
       <p class="sub">Every number here is produced by <code>make benchmark</code> in the repo. The deterministic gate is correct/incorrect (block rates); only the advisory risk model earns precision/recall - kept separate.</p>
       <div id="benchOut"></div>
-      <p class="sub" style="margin-top:14px">Measured separately by <code>make latency</code>: one full authorization through the 11-check gate (including the Ed25519 mandate verify) takes about <b>0.13 ms</b> at p50, <b>0.20 ms</b> at p95, and <b>0.26 ms</b> at p99, roughly <b>7,000</b> per second on one core. A fixed checklist, not an LLM round-trip, so the same input returns the same reason code every time.</p>
+      <p class="sub" style="margin-top:14px">Measured separately by <code>make latency</code>: one full authorization through the 11-check gate (including the Ed25519 mandate verify) takes about <b>0.10 ms</b> at p50, <b>0.11 ms</b> at p95, and <b>0.12 ms</b> at p99, roughly <b>9,600</b> per second on one core. A fixed checklist, not an LLM round-trip, so the same input returns the same reason code every time.</p>
       <p class="small faint" style="margin-top:10px">Honesty note: the advisory risk model above scores 1.00 on this separable synthetic set, but under a different generator its recall drops to <b>0.63</b> while the deterministic gate still blocks <b>100%</b>. The model is not the security boundary; the verifier is.</p>
 
       <label class="fld" style="margin-top:24px">AP2 rail conformance - real ES256 Cart Mandates (<code>make ap2</code>)</label>
