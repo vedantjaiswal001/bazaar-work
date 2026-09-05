@@ -44,7 +44,7 @@ revenue for safety - the *same* gate that blocks 100% of attacks let a bounded u
 **AOV by +7.72%** with **100%** of upsold orders still clearing, and at **0.10 ms** per
 decision it can sit in front of every transaction at commerce scale with no added latency.
 Verifiable authorization is what lets a merchant say *yes* to AI buyers, which is where the
-growth is. Production-ready and deployed live: Razorpay Test Mode today, one key-swap from
+growth is. Production-ready and one-click deployable (single `render.yaml`): Razorpay Test Mode today, one key-swap from
 production, refusing any non-test key as a safety guard.
 
 ## Prove every claim - the commands
